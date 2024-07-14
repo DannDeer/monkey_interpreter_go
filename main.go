@@ -2,20 +2,20 @@ package main
 
 import (
 	"fmt"
-	"monkey_interpreter_go/lexer"
-	"monkey_interpreter_go/token"
+	"monkey_interpreter_go/repl"
+	"os"
+	user2 "os/user"
 )
 
 func main() {
-	l := lexer.New("==!234")
+	user, err := user2.Current()
 
-	tok := l.NextToken()
-	fmt.Println(tok.Type)
-	fmt.Println(tok.Literal)
-
-	for tok.Type != token.EOF {
-		tok := l.NextToken()
-		fmt.Println(tok.Type)
-		fmt.Println(tok.Literal)
+	if err != nil {
+		panic(err)
 	}
+
+	fmt.Printf("Hello %s! This is the Monkey programming language repl!\n", user.Username)
+	fmt.Printf("Feel free to type in commands\n")
+
+	repl.Start(os.Stdin, os.Stdout)
 }
